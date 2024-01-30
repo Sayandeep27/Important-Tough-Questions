@@ -1,0 +1,58 @@
+class Solution {
+public:
+
+    int SubarraySum(vector<int>&temp,int target)
+    {
+        int n=temp.size();
+
+        map<int,int>mp;
+
+        mp[0]=1;
+
+        int sum=0;
+
+        int cnt=0;
+
+        for(int i=0;i<n;i++)
+        {
+            sum+=temp[i];
+
+            int rem=sum-target;
+           
+            if(mp.find(rem)!=mp.end())
+            {
+                cnt+=mp[rem];
+            }
+            mp[sum]++;
+        }
+
+        return cnt;
+    }
+
+    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
+         
+         int ans=0;
+
+         int n=matrix.size();
+         int m=matrix[0].size();
+
+         for(int i=0;i<n;i++)
+         {
+             vector<int>temp(m,0);
+
+             for(int row=i;row<n;row++)
+             {
+                for(int col=0;col<m;col++)
+                {
+                    temp[col]+=matrix[row][col];
+                }
+
+                 ans+=SubarraySum(temp,target);
+             }
+
+         }
+
+        return ans;
+
+    }
+};
